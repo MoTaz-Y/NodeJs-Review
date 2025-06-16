@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 const mongoUrl = process.env.MONGO_URL;
 const cors = require("cors");
 const errorHandler = require("./utils/errorHandler");
+const path = require("path");
 
 mongoose
   .connect(mongoUrl)
@@ -17,6 +18,7 @@ mongoose
   .catch((err) => console.log(err));
 app.use(cors());
 app.use(express.json());
+app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/courses", coursesRoutes);
 app.use("/api/users", usersRoutes);
 app.use((req, res) => {
